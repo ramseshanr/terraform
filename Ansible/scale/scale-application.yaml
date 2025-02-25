@@ -1,0 +1,34 @@
+- name: Scale replicas of application
+  hosts: localhost
+  vars_prompt:
+    - name: "Deployment_Name"
+      prompt: "Please enter the deployment name"
+      private: no
+    - name: "Replica_count"
+      prompt: "Enter the number of replicas required"
+      private: no
+  tasks:
+    - name: Gather facts for the deployment
+      kubernetes.core.k8s_info:
+        kind: Deployment
+        namespace: default
+        name: "{{ Deployment_Name }}"
+      register: k8s_deployments
+    - name: Display the number of replicas before scale
+      debug:
+        msg: "The number of replicas before scale is {{ k8s_deployments.resources[0].spec.replicas }}"
+    - name: Scale the deployment
+      kubernetes.core.k8s_scale:
+        kind: Deployment
+        name: "{{ Deployment_Name }}"
+        namespace: default
+        replicas: "{{ Replica_count }}"
+    - name: Gather facts for the deployment after scaling
+      kubernetes.core.k8s_info:
+        kind: Deployment
+        namespace: default
+        name: "{{ Deployment_Name }}"
+      register: scaled_deployment
+    - name: Display the number of replicas after scale
+      debug:
+        msg: "The number of replicas after scale is {{ scaled_deployment.resources[0].spec.replicas }}"

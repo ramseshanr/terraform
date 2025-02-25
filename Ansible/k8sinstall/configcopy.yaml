@@ -1,0 +1,16 @@
+---
+- name: Copy ~/.kube/config from Remote VM to Local VM
+  hosts: mgr
+  gather_facts: no
+  tasks:
+    - name: Ensure ~/.kube directory exists on local machine
+      delegate_to: localhost
+      file:
+        path: ~/.kube
+        state: directory
+        mode: '0755'
+    - name: Copy kubeconfig from remote VM to local machine
+      fetch:
+        src: ~/.kube/config
+        dest: ~/.kube/config
+        flat: yes

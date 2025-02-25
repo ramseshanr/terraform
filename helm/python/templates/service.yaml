@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "python.fullname" . }}
+  labels:
+    {{- include "python.labels" . | nindent 4 }}
+    env: {{ .Values.Frontend.pod.labelEnv }}
+spec:
+  type: {{ .Values.Frontend.service.type }}  # Exposes the service externally
+  selector:
+    app: {{ .Values.Frontend.pod.labelApp }}
+    env: {{ .Values.Frontend.pod.labelEnv }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.Frontend.service.port }}        # Service port that clients connect to
+      targetPort: {{ .Values.Frontend.service.port }}  # Forward traffic to container's port
+      nodePort: {{ .Values.Frontend.service.nodePort }}   
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "redis.fullname" . }}
+  labels:
+    {{- include "redis.labels" . | nindent 4 }}
+    env: {{ .Values.redis.pod.labelEnv }}
+spec:
+  type: {{ .Values.redis.service.type }}  # Exposes the service externally
+  selector:
+    app: {{ .Values.redis.pod.labelApp }}
+    env: {{ .Values.redis.pod.labelEnv }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.redis.service.port }}        # Service port that clients connect to
+      targetPort: {{ .Values.redis.service.port }}  # Forward traffic to container's port
+      

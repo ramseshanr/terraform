@@ -1,0 +1,12 @@
+
+PLAY [Copy ~/.kube/config from Remote VM to Local VM] **************************
+
+TASK [Ensure ~/.kube directory exists on local machine] ************************
+ok: [mgr -> localhost]
+
+TASK [Copy kubeconfig from remote VM to local machine] *************************
+changed: [mgr]
+
+PLAY RECAP *********************************************************************
+mgr                        : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

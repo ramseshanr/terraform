@@ -1,0 +1,188 @@
+
+PLAY [Set up Kubernetes Cluster with containerd] *******************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [mgr]
+ok: [wrk2]
+ok: [wrk1]
+
+TASK [Update apt packages] *****************************************************
+changed: [mgr]
+changed: [wrk2]
+changed: [wrk1]
+
+TASK [Install required packages] ***********************************************
+changed: [mgr]
+changed: [wrk2]
+changed: [wrk1]
+
+TASK [Add modules to containerd.conf] ******************************************
+changed: [mgr]
+changed: [wrk1]
+changed: [wrk2]
+
+TASK [Load overlay module] *****************************************************
+changed: [wrk1]
+changed: [mgr]
+changed: [wrk2]
+
+TASK [Load br_netfilter module] ************************************************
+changed: [mgr]
+changed: [wrk1]
+changed: [wrk2]
+
+TASK [Configure sysctl settings for Kubernetes] ********************************
+changed: [mgr]
+changed: [wrk1]
+changed: [wrk2]
+
+TASK [Apply sysctl settings] ***************************************************
+changed: [wrk2]
+changed: [wrk1]
+changed: [mgr]
+
+TASK [Add containerd apt repository] *******************************************
+changed: [mgr]
+changed: [wrk2]
+changed: [wrk1]
+
+TASK [Create /etc/apt/keyrings directory] **************************************
+ok: [mgr]
+ok: [wrk2]
+ok: [wrk1]
+
+TASK [Download Docker GPG key and convert to keyrings] *************************
+changed: [mgr]
+changed: [wrk1]
+changed: [wrk2]
+
+TASK [Convert GPG key to keyrings format] **************************************
+changed: [wrk1]
+changed: [wrk2]
+changed: [mgr]
+
+TASK [Remove temporary Docker GPG file] ****************************************
+changed: [wrk2]
+changed: [mgr]
+changed: [wrk1]
+
+TASK [Add Docker repository] ***************************************************
+changed: [mgr]
+changed: [wrk1]
+changed: [wrk2]
+
+TASK [Install containerd] ******************************************************
+changed: [mgr]
+changed: [wrk2]
+changed: [wrk1]
+
+TASK [systemd cgroup Management] ***********************************************
+changed: [wrk1]
+changed: [wrk2]
+changed: [mgr]
+
+TASK [Ensure containerd is started] ********************************************
+changed: [mgr]
+changed: [wrk2]
+changed: [wrk1]
+
+TASK [Ensure /tmp directory has no previous key file] **************************
+ok: [mgr]
+ok: [wrk2]
+ok: [wrk1]
+
+TASK [Download Kubernetes APT GPG key] *****************************************
+changed: [mgr]
+changed: [wrk2]
+changed: [wrk1]
+
+TASK [Convert the GPG key to keyrings format] **********************************
+changed: [mgr]
+changed: [wrk2]
+changed: [wrk1]
+
+TASK [Remove temporary Kubernetes APT key file] ********************************
+changed: [mgr]
+changed: [wrk2]
+changed: [wrk1]
+
+TASK [Add Kubernetes APT repository entry] *************************************
+changed: [mgr]
+changed: [wrk2]
+changed: [wrk1]
+
+TASK [Install Kubernetes packages] *********************************************
+changed: [mgr]
+changed: [wrk2]
+changed: [wrk1]
+
+TASK [Hold Kubernetes packages at current version] *****************************
+ok: [wrk1]
+ok: [mgr]
+ok: [wrk2]
+
+TASK [Initialize Kubernetes master] ********************************************
+skipping: [wrk1]
+skipping: [wrk2]
+changed: [mgr]
+
+TASK [Create .kube directory] **************************************************
+skipping: [wrk1]
+skipping: [wrk2]
+changed: [mgr]
+
+TASK [Copy kube config to user directory] **************************************
+skipping: [wrk1]
+skipping: [wrk2]
+changed: [mgr]
+
+TASK [Copy kube config to root directory] **************************************
+skipping: [wrk1]
+skipping: [wrk2]
+changed: [mgr]
+
+TASK [Set kubeconfig for root on master] ***************************************
+skipping: [wrk1]
+skipping: [wrk2]
+changed: [mgr]
+
+TASK [Get kubeadm join command] ************************************************
+skipping: [wrk1]
+skipping: [wrk2]
+changed: [mgr]
+
+TASK [Set kubeadm join command in facts] ***************************************
+ok: [mgr]
+skipping: [wrk1]
+skipping: [wrk2]
+
+TASK [Install network plugin] **************************************************
+skipping: [wrk1]
+skipping: [wrk2]
+changed: [mgr]
+
+PLAY [Join Worker Nodes to Cluster] ********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [wrk1]
+ok: [wrk2]
+
+TASK [Wait for master to complete join command generation] *********************
+skipping: [wrk1]
+skipping: [wrk2]
+
+TASK [Check if node is already part of the cluster] ****************************
+fatal: [wrk1]: FAILED! => {"changed": false, "cmd": ["systemctl", "status", "kubelet"], "delta": "0:00:00.012343", "end": "2025-02-25 16:04:58.304094", "msg": "non-zero return code", "rc": 3, "start": "2025-02-25 16:04:58.291751", "stderr": "", "stderr_lines": [], "stdout": "○ kubelet.service - kubelet: The Kubernetes Node Agent\n     Loaded: loaded (/usr/lib/systemd/system/kubelet.service; enabled; preset: enabled)\n    Drop-In: /usr/lib/systemd/system/kubelet.service.d\n             └─10-kubeadm.conf\n     Active: inactive (dead)\n       Docs: https://kubernetes.io/docs/", "stdout_lines": ["○ kubelet.service - kubelet: The Kubernetes Node Agent", "     Loaded: loaded (/usr/lib/systemd/system/kubelet.service; enabled; preset: enabled)", "    Drop-In: /usr/lib/systemd/system/kubelet.service.d", "             └─10-kubeadm.conf", "     Active: inactive (dead)", "       Docs: https://kubernetes.io/docs/"]}
+...ignoring
+fatal: [wrk2]: FAILED! => {"changed": false, "cmd": ["systemctl", "status", "kubelet"], "delta": "0:00:00.011434", "end": "2025-02-25 16:04:58.387423", "msg": "non-zero return code", "rc": 3, "start": "2025-02-25 16:04:58.375989", "stderr": "", "stderr_lines": [], "stdout": "○ kubelet.service - kubelet: The Kubernetes Node Agent\n     Loaded: loaded (/usr/lib/systemd/system/kubelet.service; enabled; preset: enabled)\n    Drop-In: /usr/lib/systemd/system/kubelet.service.d\n             └─10-kubeadm.conf\n     Active: inactive (dead)\n       Docs: https://kubernetes.io/docs/", "stdout_lines": ["○ kubelet.service - kubelet: The Kubernetes Node Agent", "     Loaded: loaded (/usr/lib/systemd/system/kubelet.service; enabled; preset: enabled)", "    Drop-In: /usr/lib/systemd/system/kubelet.service.d", "             └─10-kubeadm.conf", "     Active: inactive (dead)", "       Docs: https://kubernetes.io/docs/"]}
+...ignoring
+
+TASK [Join Kubernetes cluster if not already joined] ***************************
+changed: [wrk2]
+changed: [wrk1]
+
+PLAY RECAP *********************************************************************
+mgr                        : ok=32   changed=27   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+wrk1                       : ok=27   changed=21   unreachable=0    failed=0    skipped=9    rescued=0    ignored=1   
+wrk2                       : ok=27   changed=21   unreachable=0    failed=0    skipped=9    rescued=0    ignored=1   
+

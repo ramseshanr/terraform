@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "python.fullname" . }}
+  labels:
+    {{- include "python.labels" . | nindent 4 }}
+    env: {{ .Values.Frontend.pod.labelEnv }}
+spec:
+  replicas: {{ .Values.Frontend.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.Frontend.labelsapp }}
+      env: {{ .Values.Frontend.pod.labelEnv }}
+     
+
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.Frontend.pod.labelApp }}
+        env: {{ .Values.Frontend.pod.labelEnv }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.Frontend.image.repository }}:{{ .Values.Frontend.image.tag }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.Frontend.service.port }}
+              protocol: TCP
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "redis.fullname" . }}
+  labels:
+    {{- include "redis.labels" . | nindent 4 }}
+    env: {{ .Values.redis.pod.labelEnv }}
+spec:
+  replicas: {{ .Values.redis.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.redis.labelsapp }}
+      env: {{ .Values.redis.pod.labelEnv }}
+     
+
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.redis.pod.labelApp }}
+        env: {{ .Values.redis.pod.labelEnv }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}"
+          ports:
+            - name: redis
+              containerPort: {{ .Values.redis.service.port }}
+              protocol: TCP

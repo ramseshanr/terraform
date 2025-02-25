@@ -1,0 +1,28 @@
+
+PLAY [Scale replicas of application] *******************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Gather facts for the deployment] *****************************************
+ok: [localhost]
+
+TASK [Display the number of replicas before scale] *****************************
+ok: [localhost] => {
+    "msg": "The number of replicas before scale is 1"
+}
+
+TASK [Scale the deployment] ****************************************************
+changed: [localhost]
+
+TASK [Gather facts for the deployment after scaling] ***************************
+ok: [localhost]
+
+TASK [Display the number of replicas after scale] ******************************
+ok: [localhost] => {
+    "msg": "The number of replicas after scale is 5"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=6    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

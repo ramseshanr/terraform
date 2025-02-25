@@ -1,0 +1,11 @@
+---
+- name: Python_helm
+  hosts: localhost
+  tasks:
+    - name: Deploying python helm
+      kubernetes.core.helm:
+        name: python
+        chart_ref: /home/ubuntu/weekend/helm/python
+        release_namespace: "default"
+        kubeconfig: ~/.kube/config
+        release_state: present
