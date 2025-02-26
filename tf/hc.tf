@@ -25,7 +25,7 @@ resource "aws_instance" "wrk" {
     count = 2
     key_name= "17-key"
     tags = {
-        Name = "TF-17-k8s-worker-$[count.index+1]"
+        Name = "TF-17-k8s-worker-${count.index + 1}"
         owner =  "Ramaseshan Rangarajan"
     }
     launch_template {
